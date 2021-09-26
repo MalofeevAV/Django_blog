@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-lg-10 align-self-end">
+                <h1 class="font-weight-bold mb-4">Add new article</h1>
+                <p></p>
+            </div>
+            <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="mb-5">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            {{ blogform.title }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            {{ blogform.description }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            {{ blogform.content }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            {{ blogform.image }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            {{ blogform.tag }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="save btn btn-primary btn-xl">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

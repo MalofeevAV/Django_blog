@@ -1,0 +1,33 @@
+{% load static %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url( '{{ src }}/{{image}}' )">
+
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        {% if 'blog' in request.path %} {# different view for blog page #}
+          <div class="post-heading">
+            <h1>{{ post_current.title }}</h1>
+            <h2 class="subheading">{{ post_current.description }}</h2>
+            <span class="meta">
+              Posted by <a href="#">{{post_current.author}}</a> on {{post_current.posted}}
+            </span>
+          </div>
+        {% else %} {# standard view for other pages, like main/about/contacts #}
+          <div class="site-heading">
+            <h1>{{ header_text }}</h1>
+            {% if request.path == "/" %} {# main page include login/logoff button #}
+              {% include 'registration/loginpartial.html' %}
+            {% else %}
+              <span class="subheading mb-5">{{ subheader_text }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</header>

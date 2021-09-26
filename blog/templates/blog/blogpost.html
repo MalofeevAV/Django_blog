@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p class="font-weight-light mb-5"> {{ post_current.content|linebreaksbr }} {# вывод текста по абзацам #}
+                    <br>
+                    {% for tag in post_current.tag.all %}
+                        <a href="{% url 'tag' tag.slug %}" class="mr-1 badge badge-info">#{{ tag }}</a>
+                    {% endfor %}
+                    </p>
+
+                    {% if user.is_authenticated %}
+                        {% if user == post_current.author or user.is_superuser %}
+                            <div>
+                                <a href="{% url 'delete_article' post_current.slug %}" class="btn btn-danger">Delete article</a>
+                                <a href="{% url 'update_article' post_current.slug %}" class="btn btn-info">Update article</a>
+                                <p></p>
+                            </div>
+                        {% endif %}
+
+                        <h3 class="mb-3">Add comment</h3>
+                        <form method="POST"> {% csrf_token %}
+                             <div class="form-group">
+                                <label for="{{ commentform.text.id_for_label }}" class="control-label">{{ commentform.text.label }}</label>
+                                <div>
+                                    {{ commentform.text }}
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit" class="save btn btn-primary btn-xl">Submit comment</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <h4 class="font-weight-light">Please<a href="{% url 'login' %}" style="color: #0085a1"> Login </a>to comment</h4>
+                    {% endif %}
+
+                    {% for comment in comments %}
+                        <hr>
+                        <h5>{{ comment.date }}</h5>
+                        <h6>{{ comment.author }}</h6>
+                        <p>{{ comment.text|linebreaksbr }}</p>
+                    {% endfor %}
+
+                    <p><a href="{% url 'main' %}">Back to the main page</a></p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+{% endblock %}
